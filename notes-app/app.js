@@ -10,8 +10,21 @@ yargs.version("1.0.1");
 yargs.command({
   command: "add",
   describe: "Add a new note",
-  handler: function() {
-    console.log("Adding new note");
+  builder: {
+    title: {
+      describe: "Note title",
+      demandOption: true,
+      type: "string"
+    },
+    body: {
+      describe: "Note body",
+      demandOption: true,
+      type: "string"
+    }
+  },
+  handler: function(argv) {
+    console.log("Title: ", argv.title);
+    console.log("Body: ", argv.body);
   }
 });
 
@@ -38,13 +51,4 @@ yargs.command({
     console.log("List the notes");
   }
 });
-
-console.log(yargs.argv);
-
-// if (command === "add") {
-//   console.log("Adding note");
-// } else if (command === "remove") {
-//   console.log("removing note");
-// } else {
-//   console.log("wrong command");
-// }
+yargs.parse();
