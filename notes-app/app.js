@@ -53,8 +53,8 @@ yargs.command({
 yargs.command({
   command: "list",
   describe: "Listing all the notes",
-  handler: function() {
-    console.log("List the notes");
+  handler: () => {
+    notes.listNotes();
   }
 });
 yargs.parse();
