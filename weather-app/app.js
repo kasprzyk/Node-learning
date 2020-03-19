@@ -25,7 +25,9 @@ const geocodeUrl =
 
 request({ url: geocodeUrl, json: true }, (error, response) => {
   if (error) {
-    console.log(`error: ${error.body.code}`);
+    console.log(`unable to connect to services`);
+  } else if (response.body.features.length === 0) {
+    console.log("Unable to find location");
   } else {
     let lat = response.body.features[0].center[1];
     let lng = response.body.features[0].center[0];
