@@ -38,6 +38,14 @@ app.get("/help", (req, res) => {
   });
 });
 
+app.get("/help/*", (req, res) => {
+  res.render("404", {
+    errorMessage: "Help article not found! Go to another page",
+    title: "404",
+    name: "Piotr Kasprzycki"
+  });
+});
+
 // app.get("", (req, res) => {
 //   res.send("<h1>Weather</h1>");
 // });
@@ -46,6 +54,14 @@ app.get("/weather", (req, res) => {
   res.send({
     forecast: "test",
     location: "Poland"
+  });
+});
+
+app.get("*", (req, res) => {
+  res.render("404", {
+    errorMessage: "Page not found! Go to another page",
+    title: "404",
+    name: "Piotr Kasprzycki"
   });
 });
 app.listen(3000, () => {
