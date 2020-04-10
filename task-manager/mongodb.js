@@ -1,10 +1,19 @@
 // CRUD create read update delete
 
-const mongodb = require("mongodb");
-const MongoClient = mongodb.MongoClient;
+// const mongodb = require("mongodb");
+// const MongoClient = mongodb.MongoClient;
+// const ObjectId = mongodb.ObjectId;
+
+const { MongoClient, ObjectId } = require("mongodb");
 
 const connectionURL = "mongodb://127.0.0.1:27017";
 const databaseName = "task-manager";
+
+const id = new ObjectId();
+console.log(id);
+console.log(id.id);
+console.log(id.toHexString().length);
+console.log(id.getTimestamp());
 
 MongoClient.connect(
   connectionURL,
@@ -16,58 +25,32 @@ MongoClient.connect(
     console.log("connected correctly");
 
     const db = client.db(databaseName);
-
-    // db.collection("users").insertOne(
-    //   {
-    //     name: "Piotr",
-    //     age: 32,
-    //   },
-    //   (error, result) => {
-    //     if (error) {
-    //       return console.log("unable to insert user");
-    //     }
-    //     console.log(result.ops);
-    //   }
-    // );
-    // db.collection("users").insertMany(
-    //   [
-    //     {
-    //       name: "Kate",
-    //       age: 28,
-    //     },
-    //     {
-    //       name: "Kasprzyk",
-    //       age: 32,
-    //     },
-    //   ],
-    //   (error, result) => {
-    //     if (error) {
-    //       return console.log(error);
-    //     }
-    //     console.log(result.ops);
-    //   }
-    // );
-    db.collection("tasks-collection").insertMany(
-      [
-        {
-          description: "Task 1",
-          completed: true,
-        },
-        {
-          description: "Task 2",
-          completed: false,
-        },
-        {
-          description: "Task 3",
-          completed: true,
-        },
-      ],
+    db.collection("users").findOne(
+      { _id: new ObjectId("5e8f8567a4e4e653ecf8ce17") },
       (error, result) => {
         if (error) {
           return console.log(error);
         }
-        console.log(result.ops);
+        console.log(result);
       }
     );
+
+    db.collection("users")
+      .find({ name: "Piotr" })
+      .toArray((error, result) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log(result);
+      });
+
+    db.collection("users")
+      .find({ name: "Piotr" })
+      .count((error, result) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log(result);
+      });
   }
 );
