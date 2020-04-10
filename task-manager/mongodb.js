@@ -29,15 +29,37 @@ MongoClient.connect(
     //     console.log(result.ops);
     //   }
     // );
-    db.collection("users").insertMany(
+    // db.collection("users").insertMany(
+    //   [
+    //     {
+    //       name: "Kate",
+    //       age: 28,
+    //     },
+    //     {
+    //       name: "Kasprzyk",
+    //       age: 32,
+    //     },
+    //   ],
+    //   (error, result) => {
+    //     if (error) {
+    //       return console.log(error);
+    //     }
+    //     console.log(result.ops);
+    //   }
+    // );
+    db.collection("tasks-collection").insertMany(
       [
         {
-          name: "Kate",
-          age: 28,
+          description: "Task 1",
+          completed: true,
         },
         {
-          name: "Kasprzyk",
-          age: 32,
+          description: "Task 2",
+          completed: false,
+        },
+        {
+          description: "Task 3",
+          completed: true,
         },
       ],
       (error, result) => {
