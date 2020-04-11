@@ -35,39 +35,45 @@ MongoClient.connect(
       }
     );
 
-    // const updatePromise = db.collection("users").updateOne(
-    //   {
-    //     _id: new ObjectId("5e8f8567a4e4e653ecf8ce17"),
-    //   },
-    //   {
-    //     $set: {
-    //       name: "Stefan",
-    //       age: 101,
-    //     },
-    //   }
-    // );
-
-    // updatePromise
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
-    db.collection("tasks-collection")
-      .updateMany(
-        {
-          completed: false,
-        },
-        {
-          $set: {
-            completed: true,
-          },
+    db.collection("users")
+      .find({ name: "Piotr" })
+      .toArray((error, result) => {
+        if (error) {
+          return console.log(error);
         }
-      )
+        console.log(result);
+      });
+
+    db.collection("users")
+      .find({ name: "Piotr" })
+      .count((error, result) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log(result);
+      });
+
+    db.collection("tasks")
+      .find({ completed: false })
+      .toArray((error, tasks) => {
+        console.log(tasks);
+      });
+
+    const updatePromise = db.collection("users").updateOne(
+      {
+        _id: new ObjectId("5e8f8567a4e4e653ecf8ce17"),
+      },
+      {
+        $set: {
+          name: "Stefan",
+          age: 101,
+        },
+      }
+    );
+
+    updatePromise
       .then((result) => {
-        console.log(result.modifiedCount);
+        console.log(result);
       })
       .catch((error) => {
         console.log(error);
