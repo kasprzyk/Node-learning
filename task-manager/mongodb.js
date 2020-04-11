@@ -25,49 +25,20 @@ MongoClient.connect(
     console.log("connected correctly");
 
     const db = client.db(databaseName);
-    db.collection("users").findOne(
-      { _id: new ObjectId("5e8f8567a4e4e653ecf8ce17") },
-      (error, result) => {
-        if (error) {
-          return console.log(error);
-        }
-        console.log(result);
-      }
-    );
 
-    // const updatePromise = db.collection("users").updateOne(
-    //   {
-    //     _id: new ObjectId("5e8f8567a4e4e653ecf8ce17"),
-    //   },
-    //   {
-    //     $set: {
-    //       name: "Stefan",
-    //       age: 101,
-    //     },
-    //   }
-    // );
-
-    // updatePromise
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
-    db.collection("tasks-collection")
-      .updateMany(
-        {
-          completed: false,
-        },
-        {
-          $set: {
-            completed: true,
-          },
-        }
-      )
+    db.collection("users")
+      .deleteMany({ age: 27 })
       .then((result) => {
-        console.log(result.modifiedCount);
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    db.collection("users")
+      .deleteOne({ description: "test" })
+      .then((result) => {
+        console.log(result);
       })
       .catch((error) => {
         console.log(error);
