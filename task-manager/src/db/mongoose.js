@@ -20,3 +20,11 @@ const me = new User({
   name: "Piotr",
   age: 32,
 });
+
+me.save()
+  .then((me) => {
+    console.log(me);
+  })
+  .catch((error) => {
+    console.log("Error: ", error);
+  });
