@@ -14,6 +14,19 @@ const User = mongoose.model("User", {
     required: true,
     trim: true,
   },
+  password: {
+    type: String,
+    required: true,
+    trim: true,
+    validate(value) {
+      if (value.length < 6) {
+        throw new Error("Password must be longer than 6");
+      }
+      if (validator.contains(value)) {
+        throw new Error("Password cannot contain word password");
+      }
+    },
+  },
   age: {
     type: Number,
     validate(value) {
@@ -38,39 +51,45 @@ const User = mongoose.model("User", {
 const me = new User({
   name: "Piotr",
   age: 32,
+  email: "asdasd@gmail.com   ",
+  password: "password",
 });
+
+me.save()
+  .then((me) => {
+    console.log(me);
+  })
+  .catch((error) => {
+    console.log("Error: ", error);
+  });
 
 const Task = mongoose.model("Task", {
   description: {
     type: String,
+    trim: true,
   },
   completed: {
     type: Boolean,
+    required: false,
+    default: false,
   },
 });
 
-const newTask = new Task({
-  description: "Test",
-  completed: true,
-});
-// me.save()
-//   .then((me) => {
-//     console.log(me);
-//   })
-//   .catch((error) => {
-//     console.log("Error: ", error);
-//   });
+// const newTask = new Task({
+//   description: "Test",
+//   completed: true,
+// });
 
 //   const me = new User({
 //     name: "Piotr",
 //     age: 32,
 //   });
 
-newTask
-  .save()
-  .then((newTask) => {
-    console.log(newTask);
-  })
-  .catch((error) => {
-    console.log("Error: ", error);
-  });
+// newTask
+//   .save()
+//   .then((newTask) => {
+//     console.log(newTask);
+//   })
+//   .catch((error) => {
+//     console.log("Error: ", error);
+//   });
