@@ -67,6 +67,7 @@ const Task = mongoose.model("Task", {
   description: {
     type: String,
     trim: true,
+    required: true,
   },
   completed: {
     type: Boolean,
@@ -75,21 +76,16 @@ const Task = mongoose.model("Task", {
   },
 });
 
-// const newTask = new Task({
-//   description: "Test",
-//   completed: true,
-// });
+const newTask = new Task({
+  description: "Test",
+  completed: true,
+});
 
-//   const me = new User({
-//     name: "Piotr",
-//     age: 32,
-//   });
-
-// newTask
-//   .save()
-//   .then((newTask) => {
-//     console.log(newTask);
-//   })
-//   .catch((error) => {
-//     console.log("Error: ", error);
-//   });
+newTask
+  .save()
+  .then((newTask) => {
+    console.log(newTask);
+  })
+  .catch((error) => {
+    console.log("Error: ", error);
+  });
