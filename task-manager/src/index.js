@@ -13,16 +13,15 @@ app.use(userRouter);
 app.listen(port, () => {
   console.log("Server is up on port " + port);
 });
-
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const myFunction = async () => {
-  const password = "Red1234!";
-  const hashedPassword = await bcrypt.hash(password, 8);
-  console.log(password);
-  console.log(hashedPassword);
-
-  const isMatch = await bcrypt.compare("Red1234!", hashedPassword);
-  console.log(isMatch);
+  const token = jwt.sign({ _id: "abc123" }, "testest", {
+    expiresIn: "7 days",
+  });
+  console.log(token);
+  const data = jwt.verify(token, "testest");
+  console.log(data);
 };
 
 myFunction();
