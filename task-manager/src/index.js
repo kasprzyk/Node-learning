@@ -16,12 +16,11 @@ const upload = multer({
     // if (file.originalname.endsWith('.pdf')) {
     //   return cb(new Error('File must be an PDF'));
     // }
-    if (!file.originalname.match(/\.(doc|docx)/$)) {
+    if (!file.originalname.match(/\.(doc|docx)$/)) {
       return cb(new Error('File must be an Word'));
     }
 
     cb(undefined, true);
-    cb(udefined, false);
   },
 });
 app.post('/upload', upload.single('upload'), (req, res) => {
