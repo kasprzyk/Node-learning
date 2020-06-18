@@ -107,8 +107,14 @@ const upload = multer({
   },
 });
 
-router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
-  res.send();
-});
-
-module.exports = router;
+router.post(
+  '/users/me/avatar',
+  upload.single('avatar'),
+  (req, res) => {
+    res.send();
+  },
+  (error, req, res, next) => {
+    res.status(400).send({ error: error.message });
+  }
+),
+  (module.exports = router);
