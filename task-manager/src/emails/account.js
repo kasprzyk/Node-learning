@@ -19,6 +19,16 @@ const sendWelcomeEmail = (email, name) => {
   });
 };
 
+const sendCancellationEmail = (email, name) => {
+  sgMail.send({
+    to: email,
+    from: 'pkasprzycki@ibpm.pro',
+    subject: 'See you!',
+    text: `Goodbye, ${name}`,
+  });
+};
+
 module.exports = {
   sendWelcomeEmail,
+  sendCancellationEmail,
 };
