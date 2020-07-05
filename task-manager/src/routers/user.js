@@ -1,17 +1,20 @@
 const express = require('express');
 const User = require('../models/user');
-const sharp = require('sharp')
+const sharp = require('sharp');
 const auth = require('../middleware/auth');
 const router = new express.Router();
 const multer = require('multer');
-const {sendWelcomeEmail, sendCancellationEmail} = require('../emails/account')
+const {
+  sendWelcomeEmail,
+  sendCancellationEmail,
+} = require('../emails/account');
 
 router.post('/users', async (req, res) => {
   const user = new User(req.body);
 
   try {
     await user.save();
-    sendWelcomeEmail(user.email, user.name)
+    sendWelcomeEmail(user.email, user.name);
     const token = await user.generateAuthToken();
     res.status(201).send({ user, token });
   } catch (e) {
@@ -87,7 +90,7 @@ router.delete('/users/me', auth, async (req, res) => {
     //   return res.status(404).send();
     // }
     await req.user.remove();
-    sendCancellationEmail(req.user.email, req.user.name)
+    sendCancellationEmail(req.user.email, req.user.name);
     res.send(req.user);
   } catch (e) {
     res.status(500).send();
@@ -109,31 +112,34 @@ const upload = multer({
     cb(undefined, true);
   },
 });
-router.delete('/users/me/avatar', auth, (req,res)=> {
-  req.user.avatar = undefined
+router.delete('/users/me/avatar', auth, async (req, res) => {
+  req.user.avatar = undefined;
   await req.user.save();
-  res.send()
-})
+  res.send();
+});
 
-router.get('/users/:id/avatar,', async(req,res)=>{
+router.get('/users/:id/avatar,', async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
-    if(!user || !user.avatar) {
-      throw new error()
+    const user = await User.findById(req.params.id);
+    if (!user || !user.avatar) {
+      throw new error();
     }
-    res.set('Content-Type', 'image/png')
-    res.send(user.avatar)
-  } catch (e){
-    res.status(404).send()
+    res.set('Content-Type', 'image/png');
+    res.send(user.avatar);
+  } catch (e) {
+    res.status(404).send();
   }
-})
+});
 router.post(
   '/users/me/avatar',
   auth,
   upload.single('avatar'),
   async (req, res) => {
-    const buffer = await sharp(req.file.buffer).resize({width: 250, height: 250}).png().toBuffer()
-    req.user.avatar = buffer
+    const buffer = await sharp(req.file.buffer)
+      .resize({ width: 250, height: 250 })
+      .png()
+      .toBuffer();
+    req.user.avatar = buffer;
     //req.user.avatar = req.file.buffer;
     await req.user.save();
     res.send();
