@@ -22,7 +22,14 @@ test('should calculate celcius to fahrenheit', () => {
   expect(temp).toBe(32);
 });
 
-test('should calculate fahrenheit to celcius', () => {
-  const temp = fahrenheitToCelcius(32);
-  expect(temp).toBe(0);
+// test('should calculate fahrenheit to celcius', () => {
+//   const temp = fahrenheitToCelcius(32);
+//   expect(temp).toBe(0);
+// });
+
+test('async test demo', (done) => {
+  setTimeout(() => {
+    expect(1).toBe(2);
+    done();
+  }, 2000);
 });
