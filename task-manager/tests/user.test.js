@@ -3,8 +3,8 @@ const app = require('../src/app');
 const User = require('../src/models/user');
 
 const userOne = {
-  name: 'kasprzyk',
-  email: 'kasprzyk@asd.pl',
+  name: 'kasprzyk111',
+  email: 'kasprzyk111@asd.pl',
   password: '56asdsasd!!',
 };
 
@@ -33,9 +33,20 @@ test('should log in existing user', async () => {
   await request(app)
     .post('/users/login')
     .send({
-      name: 'kasprzyk',
-      email: 'kasprzyk@asd.pl',
-      password: '56asdsasd!!',
+      name: userOne.name,
+      email: userOne.email,
+      password: userOne.password,
     })
     .expect(200);
+});
+
+test('should not log in non-existing user', async () => {
+  await request(app)
+    .post('/users/login')
+    .send({
+      name: userOne.name,
+      email: 'asdasd',
+      password: userOne.password,
+    })
+    .expect(400);
 });
